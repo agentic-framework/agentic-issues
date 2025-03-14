@@ -22,7 +22,7 @@ To install the Agentic Issues system, follow these steps:
 1. Clone the repository:
    ```bash
    cd ~/Agentic/projects
-   git clone https://github.com/username/agentic-issues.git
+   git clone https://github.com/mountain/agentic-issues.git
    ```
 
 2. Install the package in development mode:
