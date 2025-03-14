@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic_issues"
+version = "0.1.0"
+description = "A system for managing issues and tickets for Agentic projects"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Author Name", email = "author@example.com"}
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/username/agentic-issues"
+"Bug Tracker" = "https://github.com/username/agentic-issues/issues"
+
+[project.scripts]
+ag-issues = "agentic_issues.ag_issues:issues_command"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.ruff]
+line-length = 88
+target-version = "py38"
+select = ["E", "F", "B", "I"]
+ignore = []
+
+[tool.ruff.isort]
+known-first-party = ["agentic_issues"]
+
+[tool.ruff.flake8-quotes]
+docstring-quotes = "double"
