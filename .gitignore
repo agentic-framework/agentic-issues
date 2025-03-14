@@ -33,4 +33,5 @@ ENV/
 .DS_Store
 
 # Agentic Issues specific
-/Users/mingli/Agentic/shared/agentic-issues/issues/*.json
+# Ignore issue data files but keep the directory structure
+**/agentic-issues/issues/*.json
