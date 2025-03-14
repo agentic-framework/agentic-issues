@@ -113,6 +113,35 @@ ag issues update <issue-id> --assignee username
 ag issues update <issue-id> --add-label documentation
 ```
 
+## Development
+
+### Git Repository
+
+The Agentic Issues system is maintained in a Git repository. To contribute to the project:
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/agentic-issues.git
+   ```
+
+2. Create a branch for your changes:
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+3. Make your changes and commit them:
+   ```bash
+   git add .
+   git commit -m "Description of your changes"
+   ```
+
+4. Push your changes to the remote repository:
+   ```bash
+   git push origin feature/your-feature-name
+   ```
+
+5. Create a pull request to merge your changes into the main branch.
+
 ## License
 
 See the [LICENSE](LICENSE) file for details.
