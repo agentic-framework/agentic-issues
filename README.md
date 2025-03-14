@@ -121,7 +121,7 @@ The Agentic Issues system is maintained in a Git repository. To contribute to th
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/agentic-issues.git
+   git clone https://github.com/mountain/agentic-issues.git
    ```
 
 2. Create a branch for your changes:
