@@ -10,7 +10,7 @@ import sys
 import os
 import importlib.util
 
-def issues_command(args):
+def issues_command(args=None):
     """
     Handle the `ag issues` command.
     
@@ -41,6 +41,6 @@ def issues_command(args):
 
 
 if __name__ == "__main__":
-    # When run directly, pass all command-line arguments to the main function
+    # When run directly, pass all command-line arguments to the issues_command function
     exit_code = issues_command(sys.argv[1:])
     sys.exit(exit_code)

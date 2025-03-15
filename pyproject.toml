@@ -25,6 +25,9 @@ classifiers = [
 [project.scripts]
 ag-issues = "agentic_issues.ag_issues:issues_command"
 
+[project.entry_points."agentic.commands"]
+issues = "agentic_issues.ag_issues:issues_command"
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = "test_*.py"

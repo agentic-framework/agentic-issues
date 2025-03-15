@@ -1,19 +1,19 @@
-# agentic-issues
+# Agentic Issues
 
-A system for managing issues and tickets for Agentic projects
+Issue tracking plugin for the Agentic framework.
 
 ## Overview
 
-The Agentic Issues system provides a simple, git-style command-line interface for managing issues and tickets within Agentic projects. It allows users to submit, track, and update issues directly from the command line using the familiar `ag` command.
+The Agentic Issues plugin provides a simple command-line interface for tracking issues within the Agentic framework. It allows users to create, list, show, update, and close issues directly from the command line using the familiar `ag` command.
 
 ## Features
 
-- Submit issues with title, description, priority, and labels
-- List issues with filtering and sorting options
+- Create issues with title and description
+- List issues with filtering by status
 - View detailed issue information
-- Add comments to issues
-- Update issue status, priority, and assignee
-- Project-specific issue tracking
+- Update issue title, description, and status
+- Close issues
+
 
 ## Installation
 
