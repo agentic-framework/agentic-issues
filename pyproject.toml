@@ -25,8 +25,11 @@ classifiers = [
 [project.scripts]
 ag-issues = "agentic_issues.ag_issues:issues_command"
 
-[project.entry_points."agentic.commands"]
-issues = "agentic_issues.ag_issues:issues_command"
+[tool.setuptools.dynamic]
+version = {attr = "agentic_issues.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

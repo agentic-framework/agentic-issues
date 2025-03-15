@@ -11,7 +11,10 @@ setup(
     python_requires=">=3.8",
     entry_points={
         "agentic.commands": [
-            "issues=agentic_issues.cli:issues_command"
+            "issues=agentic_issues.ag_issues:issues_command"
+        ],
+        "console_scripts": [
+            "ag-issues=agentic_issues.ag_issues:issues_command"
         ]
     }
 )

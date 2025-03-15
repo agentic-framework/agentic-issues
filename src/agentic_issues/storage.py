@@ -11,7 +11,7 @@ import os
 import pathlib
 from typing import Dict, List, Optional, Union
 
-from .models import Issue, IssueComment, IssuePriority, IssueStatus
+from agentic_issues.models import Issue, IssueComment, IssuePriority, IssueStatus
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):

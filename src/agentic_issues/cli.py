@@ -11,8 +11,8 @@ import os
 import sys
 from typing import List, Optional
 
-from .models import Issue, IssuePriority, IssueStatus
-from .storage import default_storage
+from agentic_issues.models import Issue, IssuePriority, IssueStatus
+from agentic_issues.storage import default_storage
 
 
 def get_current_project_id() -> Optional[str]:
