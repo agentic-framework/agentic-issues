@@ -36,7 +36,10 @@ def format_issue_list(issues, detailed=False):
             result.append(f"Status: {issue.status.value}")
             result.append(f"Priority: {issue.priority.value}")
             result.append(f"Created: {issue.created_at.strftime('%Y-%m-%d %H:%M')}")
-            result.append(f"Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}")
+            if issue.updated_at:
+                result.append(f"Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}")
+            else:
+                result.append("Updated: Not updated yet")
             if issue.assignee:
                 result.append(f"Assignee: {issue.assignee}")
             if issue.labels:
@@ -68,9 +71,13 @@ def format_issue_detail(issue):
         f"Title: {issue.title}",
         f"Status: {issue.status.value}",
         f"Priority: {issue.priority.value}",
-        f"Created: {issue.created_at.strftime('%Y-%m-%d %H:%M')}",
-        f"Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}"
+        f"Created: {issue.created_at.strftime('%Y-%m-%d %H:%M')}"
     ]
+    
+    if issue.updated_at:
+        result.append(f"Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}")
+    else:
+        result.append("Updated: Not updated yet")
     
     if issue.assignee:
         result.append(f"Assignee: {issue.assignee}")
