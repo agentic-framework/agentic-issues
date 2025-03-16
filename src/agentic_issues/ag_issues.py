@@ -201,6 +201,47 @@ def issues_command(args=None):
             print(f"Issue {parsed_args.issue_id} not found in project {project_id}")
             return 1
     
+    # Handle the submit command
+    elif parsed_args.command == "submit":
+        project_id = get_project_id(parsed_args)
+        
+        if not parsed_args.title:
+            print("Error: Title is required")
+            return 1
+        
+        description = parsed_args.description or "No description provided"
+        
+        # Parse priority
+        try:
+            priority = IssuePriority.MEDIUM  # Default priority
+            if parsed_args.priority:
+                priority = IssuePriority(parsed_args.priority)
+        except ValueError:
+            print(f"Invalid priority: {parsed_args.priority}")
+            print(f"Valid priorities are: {', '.join(p.value for p in IssuePriority)}")
+            return 1
+        
+        # Parse labels
+        labels = []
+        if parsed_args.labels:
+            labels = [label.strip() for label in parsed_args.labels.split(",") if label.strip()]
+        
+        # Create the issue
+        issue = Issue.create(
+            project_id=project_id,
+            title=parsed_args.title,
+            description=description,
+            author=os.environ.get("USER", "unknown"),
+            priority=priority,
+            labels=labels
+        )
+        
+        # Save the issue
+        default_storage.save_issue(issue)
+        
+        print(f"Issue created with ID: {issue.id}")
+        return 0
+    
     # For other commands, show a placeholder message
     print(f"Agentic Issues - {parsed_args.command.capitalize()} command")
     print("This functionality is not yet fully implemented.")
