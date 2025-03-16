@@ -296,6 +296,29 @@ def issues_command(args=None):
         print(f"Issue {parsed_args.issue_id} updated successfully")
         return 0
     
+    # Handle the comment command
+    elif parsed_args.command == "comment":
+        project_id = get_project_id(parsed_args)
+        issue = default_storage.get_issue(project_id, parsed_args.issue_id)
+        
+        if not issue:
+            print(f"Issue {parsed_args.issue_id} not found in project {project_id}")
+            return 1
+        
+        if not parsed_args.content:
+            print("Error: Comment content is required")
+            return 1
+        
+        # Add the comment to the issue
+        author = os.environ.get("USER", "unknown")
+        comment = issue.add_comment(author, parsed_args.content)
+        
+        # Save the updated issue
+        default_storage.save_issue(issue)
+        
+        print(f"Comment added to issue {parsed_args.issue_id}")
+        return 0
+    
     # For other commands, show a placeholder message
     print(f"Agentic Issues - {parsed_args.command.capitalize()} command")
     print("This functionality is not yet fully implemented.")
