@@ -25,6 +25,9 @@ classifiers = [
 [project.scripts]
 ag-issues = "agentic_issues.ag_issues:issues_command"
 
+[project.entry-points."agentic.commands"]
+issues = "agentic_issues.ag_issues:issues_command"
+
 [tool.setuptools.dynamic]
 version = {attr = "agentic_issues.__version__"}
 
