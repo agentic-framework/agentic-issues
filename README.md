@@ -35,8 +35,9 @@ To install the Agentic Issues system, follow these steps:
 
 3. Link the command to the Agentic framework:
    ```bash
-   # This step will be implemented in the future
-   # For now, you can use the command directly from the package
+   # The ag-wrapper.sh script in the Agentic framework provides a convenient way to run the ag command
+   # You can use it directly without activating the virtual environment:
+   /Users/mingli/Agentic/agentic/ag-wrapper.sh issues list
    ```
 
 ## Usage
