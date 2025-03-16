@@ -249,6 +249,53 @@ def issues_command(args=None):
         print(f"Issue created with ID: {issue.id}")
         return 0
     
+    # Handle the update command
+    elif parsed_args.command == "update":
+        project_id = get_project_id(parsed_args)
+        issue = default_storage.get_issue(project_id, parsed_args.issue_id)
+        
+        if not issue:
+            print(f"Issue {parsed_args.issue_id} not found in project {project_id}")
+            return 1
+        
+        # Update status if specified
+        if parsed_args.status:
+            try:
+                status = IssueStatus(parsed_args.status)
+                issue.update_status(status)
+                print(f"Status updated to {status.value}")
+            except ValueError:
+                print(f"Invalid status: {parsed_args.status}")
+                print(f"Valid statuses are: {', '.join(s.value for s in IssueStatus)}")
+                return 1
+        
+        # Update priority if specified
+        if parsed_args.priority:
+            try:
+                priority = IssuePriority(parsed_args.priority)
+                issue.update_priority(priority)
+                print(f"Priority updated to {priority.value}")
+            except ValueError:
+                print(f"Invalid priority: {parsed_args.priority}")
+                print(f"Valid priorities are: {', '.join(p.value for p in IssuePriority)}")
+                return 1
+        
+        # Update assignee if specified
+        if parsed_args.assignee:
+            issue.assign(parsed_args.assignee)
+            print(f"Assignee updated to {parsed_args.assignee}")
+        
+        # Add label if specified
+        if parsed_args.add_label:
+            issue.add_label(parsed_args.add_label)
+            print(f"Label '{parsed_args.add_label}' added")
+        
+        # Save the updated issue
+        default_storage.save_issue(issue)
+        
+        print(f"Issue {parsed_args.issue_id} updated successfully")
+        return 0
+    
     # For other commands, show a placeholder message
     print(f"Agentic Issues - {parsed_args.command.capitalize()} command")
     print("This functionality is not yet fully implemented.")
