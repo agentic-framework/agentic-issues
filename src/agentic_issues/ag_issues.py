@@ -9,6 +9,88 @@ the `ag issues` subcommand.
 import sys
 import os
 import argparse
+import datetime
+from pathlib import Path
+
+from .storage import default_storage
+from .models import Issue, IssueStatus, IssuePriority
+
+def get_project_id(args):
+    """Get the project ID from the arguments or the current directory."""
+    if args.project:
+        return args.project
+    
+    # Default to the current directory name
+    return Path.cwd().name
+
+def format_issue_list(issues, detailed=False):
+    """Format a list of issues for display."""
+    if not issues:
+        return "No issues found."
+    
+    result = []
+    for issue in issues:
+        if detailed:
+            result.append(f"ID: {issue.id}")
+            result.append(f"Title: {issue.title}")
+            result.append(f"Status: {issue.status.value}")
+            result.append(f"Priority: {issue.priority.value}")
+            result.append(f"Created: {issue.created_at.strftime('%Y-%m-%d %H:%M')}")
+            result.append(f"Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}")
+            if issue.assignee:
+                result.append(f"Assignee: {issue.assignee}")
+            if issue.labels:
+                result.append(f"Labels: {', '.join(issue.labels)}")
+            result.append("")
+        else:
+            priority_marker = {
+                IssuePriority.LOW: "⚪",
+                IssuePriority.MEDIUM: "🔵",
+                IssuePriority.HIGH: "🔶",
+                IssuePriority.CRITICAL: "🔴"
+            }.get(issue.priority, "⚪")
+            
+            status_marker = {
+                IssueStatus.OPEN: "🆕",
+                IssueStatus.IN_PROGRESS: "🔄",
+                IssueStatus.RESOLVED: "✅",
+                IssueStatus.CLOSED: "❌"
+            }.get(issue.status, "🆕")
+            
+            result.append(f"{priority_marker} {status_marker} {issue.id}: {issue.title}")
+    
+    return "\n".join(result)
+
+def format_issue_detail(issue):
+    """Format a single issue for detailed display."""
+    result = [
+        f"ID: {issue.id}",
+        f"Title: {issue.title}",
+        f"Status: {issue.status.value}",
+        f"Priority: {issue.priority.value}",
+        f"Created: {issue.created_at.strftime('%Y-%m-%d %H:%M')}",
+        f"Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}"
+    ]
+    
+    if issue.assignee:
+        result.append(f"Assignee: {issue.assignee}")
+    
+    if issue.labels:
+        result.append(f"Labels: {', '.join(issue.labels)}")
+    
+    result.append("")
+    result.append("Description:")
+    result.append(issue.description)
+    
+    if issue.comments:
+        result.append("")
+        result.append("Comments:")
+        for comment in issue.comments:
+            result.append(f"--- {comment.created_at.strftime('%Y-%m-%d %H:%M')} by {comment.author} ---")
+            result.append(comment.content)
+            result.append("")
+    
+    return "\n".join(result)
 
 def issues_command(args=None):
     """
@@ -70,8 +152,58 @@ def issues_command(args=None):
         parser.print_help()
         return 1
     
+    # Handle the list command
+    if parsed_args.command == "list":
+        project_id = get_project_id(parsed_args)
+        issues = default_storage.get_issues(project_id)
+        
+        # Apply filters
+        if parsed_args.status:
+            try:
+                status = IssueStatus(parsed_args.status)
+                issues = [i for i in issues if i.status == status]
+            except ValueError:
+                print(f"Invalid status: {parsed_args.status}")
+                return 1
+        
+        if parsed_args.priority:
+            try:
+                priority = IssuePriority(parsed_args.priority)
+                issues = [i for i in issues if i.priority == priority]
+            except ValueError:
+                print(f"Invalid priority: {parsed_args.priority}")
+                return 1
+        
+        if parsed_args.label:
+            issues = [i for i in issues if parsed_args.label in (i.labels or [])]
+        
+        # Sort issues
+        if parsed_args.sort == "priority":
+            # Sort by priority (critical -> high -> medium -> low)
+            issues.sort(key=lambda i: i.priority.value, reverse=True)
+        elif parsed_args.sort == "created":
+            issues.sort(key=lambda i: i.created_at, reverse=True)
+        elif parsed_args.sort == "updated":
+            issues.sort(key=lambda i: i.updated_at, reverse=True)
+        
+        print(format_issue_list(issues, parsed_args.detailed))
+        return 0
+    
+    # Handle the show command
+    elif parsed_args.command == "show":
+        project_id = get_project_id(parsed_args)
+        issue = default_storage.get_issue(project_id, parsed_args.issue_id)
+        
+        if issue:
+            print(format_issue_detail(issue))
+            return 0
+        else:
+            print(f"Issue {parsed_args.issue_id} not found in project {project_id}")
+            return 1
+    
+    # For other commands, show a placeholder message
     print(f"Agentic Issues - {parsed_args.command.capitalize()} command")
-    print("This is a placeholder implementation. The actual functionality is not yet implemented.")
+    print("This functionality is not yet fully implemented.")
     print(f"Arguments: {parsed_args}")
     
     return 0
