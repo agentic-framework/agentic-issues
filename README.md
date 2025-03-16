@@ -33,11 +33,16 @@ To install the Agentic Issues system, follow these steps:
    uv pip install -e .
    ```
 
+   And now you can use the `ag` command:
+   ```bash
+   ag issues list
+   ```
+
 3. Link the command to the Agentic framework:
    ```bash
    # The ag-wrapper.sh script in the Agentic framework provides a convenient way to run the ag command
    # You can use it directly without activating the virtual environment:
-   /Users/mingli/Agentic/agentic/ag-wrapper.sh issues list
+   $AGHOME/agentic/ag-wrapper.sh issues list
    ```
 
 ## Usage
