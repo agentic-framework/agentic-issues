@@ -125,4 +125,5 @@ class IssueStorage:
 
 
 # Create a default storage instance
-default_storage = IssueStorage(os.path.expanduser("~/Agentic/shared/agentic-issues"))
+agentic_home = os.environ.get("AGHOME", os.path.expanduser("~/Agentic"))
+default_storage = IssueStorage(os.path.join(agentic_home, "shared", "agentic-issues"))
