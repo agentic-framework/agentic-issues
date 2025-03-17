@@ -71,9 +71,9 @@ def format_issue(issue: Issue, detailed: bool = False) -> str:
         result += f"\nAuthor: {issue.author}"
         if issue.assignee:
             result += f" | Assignee: {issue.assignee}"
-        result += f" | Created: {issue.created_at.strftime('%Y-%m-%d %H:%M')}"
+        result += f" | Created: {issue.created_at.strftime('%Y-%m-%d %H:%M') if issue.created_at else 'N/A'}"
         if issue.updated_at:
-            result += f" | Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M')}"
+            result += f" | Updated: {issue.updated_at.strftime('%Y-%m-%d %H:%M') if issue.updated_at else 'N/A'}"
         
         if issue.labels:
             result += f"\nLabels: {', '.join(issue.labels)}"
@@ -81,7 +81,7 @@ def format_issue(issue: Issue, detailed: bool = False) -> str:
         if issue.comments:
             result += "\n\nComments:\n"
             for i, comment in enumerate(issue.comments, 1):
-                result += f"\n{i}. {comment.author} ({comment.created_at.strftime('%Y-%m-%d %H:%M')}):\n"
+                result += f"\n{i}. {comment.author} ({comment.created_at.strftime('%Y-%m-%d %H:%M') if comment.created_at else 'N/A'}):\n"
                 result += f"   {comment.content}\n"
     
     return result
