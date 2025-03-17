@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Entry point for the `ag issues` command.
+Entry point for the `ag issue` command.
 
 This script is installed as a command in the Agentic framework to handle
-the `ag issues` subcommand.
+the `ag issue` subcommand.
 """
 
 import sys
@@ -99,15 +99,15 @@ def format_issue_detail(issue):
     
     return "\n".join(result)
 
-def issues_command(args=None):
+def issue_command(args=None):
     """
-    Handle the `ag issues` command.
+    Handle the `ag issue` command.
     
     This function is called by the Agentic framework's `ag` script when
-    the user runs `ag issues`.
+    the user runs `ag issue`.
     
     Args:
-        args: Command-line arguments passed to the `ag issues` command.
+        args: Command-line arguments passed to the `ag issue` command.
     
     Returns:
         int: Exit code.
@@ -328,6 +328,6 @@ def issues_command(args=None):
 
 
 if __name__ == "__main__":
-    # When run directly, pass all command-line arguments to the issues_command function
-    exit_code = issues_command(sys.argv[1:])
+    # When run directly, pass all command-line arguments to the issue_command function
+    exit_code = issue_command(sys.argv[1:])
     sys.exit(exit_code)

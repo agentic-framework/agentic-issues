@@ -3,7 +3,7 @@
 Installation script for the Agentic Issues system.
 
 This script installs the Agentic Issues system into the Agentic framework,
-allowing the `ag issues` command to be used from anywhere.
+allowing the `ag issue` command to be used from anywhere.
 """
 
 import os
@@ -57,29 +57,29 @@ def main():
         print("Error: Neither uv nor pip is available. Please install one of them.")
         return 1
     
-    # Create the issues_command.py script in the Agentic scripts directory
-    issues_command_path = agentic_scripts_dir / "issues_command.py"
+    # Create the issue_command.py script in the Agentic scripts directory
+    issue_command_path = agentic_scripts_dir / "issue_command.py"
     
-    print(f"Creating issues_command.py script at {issues_command_path}...")
+    print(f"Creating issue_command.py script at {issue_command_path}...")
     
-    with open(issues_command_path, "w") as f:
+    with open(issue_command_path, "w") as f:
         f.write("""#!/usr/bin/env python3
 \"\"\"
-Issues command for the Agentic framework.
+Issue command for the Agentic framework.
 
-This script provides the `ag issues` command for the Agentic framework.
+This script provides the `ag issue` command for the Agentic framework.
 \"\"\"
 
 import sys
 import importlib.util
 import subprocess
 
-def issues_command(args):
+def issue_command(args):
     \"\"\"
-    Handle the `ag issues` command.
+    Handle the `ag issue` command.
     
     Args:
-        args: Command-line arguments passed to the `ag issues` command.
+        args: Command-line arguments passed to the `ag issue` command.
     
     Returns:
         int: Exit code.
@@ -87,7 +87,7 @@ def issues_command(args):
     try:
         # Try to import the agentic_issues package
         import agentic_issues.ag_issues
-        return agentic_issues.ag_issues.issues_command(args)
+        return agentic_issues.ag_issues.issue_command(args)
     except ImportError:
         # If the package is not installed, suggest installing it
         print("Error: The Agentic Issues package is not installed.")
@@ -98,30 +98,30 @@ def issues_command(args):
         return 1
 
 if __name__ == "__main__":
-    sys.exit(issues_command(sys.argv[1:]))
+    sys.exit(issue_command(sys.argv[1:]))
 """)
     
     # Make the script executable
-    os.chmod(issues_command_path, 0o755)
+    os.chmod(issue_command_path, 0o755)
     
-    # Update the ag script to include the issues command
+    # Update the ag script to include the issue command
     ag_script_path = agentic_dir / "agentic" / "ag"
     
     if not ag_script_path.exists():
         print(f"Warning: ag script not found at {ag_script_path}")
-        print("You will need to manually update the ag script to include the issues command")
+        print("You will need to manually update the ag script to include the issue command")
     else:
-        print(f"Checking if the issues command is already in the ag script...")
+        print(f"Checking if the issue command is already in the ag script...")
         
         # Read the ag script
         with open(ag_script_path, "r") as f:
             ag_script = f.read()
         
-        # Check if the issues command is already in the script
-        if '"issues"' in ag_script and "issues_command" in ag_script:
-            print("The issues command is already in the ag script")
+        # Check if the issue command is already in the script
+        if '"issue"' in ag_script and "issue_command" in ag_script:
+            print("The issue command is already in the ag script")
         else:
-            print("Adding the issues command to the ag script...")
+            print("Adding the issue command to the ag script...")
             
             # Create a backup of the ag script
             backup_path = ag_script_path.with_suffix(".bak")
@@ -140,42 +140,42 @@ if __name__ == "__main__":
                 print("Error: Could not find the end of COMMAND_STRUCTURE in the ag script")
                 return 1
             
-            # Insert the issues command into the COMMAND_STRUCTURE dictionary
-            issues_command_def = """    "issues": {
+            # Insert the issue command into the COMMAND_STRUCTURE dictionary
+            issue_command_def = """    "issue": {
         "description": "Issue tracking commands",
         "subcommands": {
             "submit": {
                 "description": "Submit a new issue",
-                "module": "issues_command",
-                "function": "issues_command"
+                "module": "issue_command",
+                "function": "issue_command"
             },
             "list": {
                 "description": "List issues",
-                "module": "issues_command",
-                "function": "issues_command"
+                "module": "issue_command",
+                "function": "issue_command"
             },
             "show": {
                 "description": "Show issue details",
-                "module": "issues_command",
-                "function": "issues_command"
+                "module": "issue_command",
+                "function": "issue_command"
             },
             "comment": {
                 "description": "Add a comment to an issue",
-                "module": "issues_command",
-                "function": "issues_command"
+                "module": "issue_command",
+                "function": "issue_command"
             },
             "update": {
                 "description": "Update an issue",
-                "module": "issues_command",
-                "function": "issues_command"
+                "module": "issue_command",
+                "function": "issue_command"
             }
         }
     },"""
             
-            # Insert the issues command definition before the end of the COMMAND_STRUCTURE dictionary
+            # Insert the issue command definition before the end of the COMMAND_STRUCTURE dictionary
             new_ag_script = (
                 ag_script[:command_structure_end] +
-                issues_command_def +
+                issue_command_def +
                 ag_script[command_structure_end:]
             )
             
@@ -183,12 +183,12 @@ if __name__ == "__main__":
             with open(ag_script_path, "w") as f:
                 f.write(new_ag_script)
             
-            print("Updated the ag script to include the issues command")
+            print("Updated the ag script to include the issue command")
     
     print("\nInstallation complete!")
-    print("You can now use the `ag issues` command from anywhere.")
+    print("You can now use the `ag issue` command from anywhere.")
     print("For example, try running:")
-    print("  ag issues list")
+    print("  ag issue list")
     
     return 0
 

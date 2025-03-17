@@ -1,7 +1,7 @@
 """
 Command-line interface for the Agentic Issues system.
 
-This module provides the CLI interface for the `ag issues` command.
+This module provides the CLI interface for the `ag issue` command.
 """
 
 import argparse
