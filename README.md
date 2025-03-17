@@ -35,14 +35,14 @@ To install the Agentic Issues system, follow these steps:
 
    And now you can use the `ag` command:
    ```bash
-   ag issues list
+   ag issue list
    ```
 
 3. Link the command to the Agentic framework:
    ```bash
    # The ag-wrapper.sh script in the Agentic framework provides a convenient way to run the ag command
    # You can use it directly without activating the virtual environment:
-   $AGHOME/agentic/ag-wrapper.sh issues list
+   $AGHOME/agentic/ag-wrapper.sh issue list
    ```
 
 ## Usage
@@ -52,7 +52,7 @@ To install the Agentic Issues system, follow these steps:
 To submit a new issue:
 
 ```bash
-ag issues submit --title "Issue title" --description "Detailed description" --priority high --labels "bug,ui"
+ag issue submit --title "Issue title" --description "Detailed description" --priority high --labels "bug,ui"
 ```
 
 If you don't provide a description, you'll be prompted to enter one interactively.
@@ -62,26 +62,26 @@ If you don't provide a description, you'll be prompted to enter one interactivel
 To list all issues for the current project:
 
 ```bash
-ag issues list
+ag issue list
 ```
 
 You can filter and sort the issues:
 
 ```bash
 # Filter by status
-ag issues list --status open
+ag issue list --status open
 
 # Filter by priority
-ag issues list --priority high
+ag issue list --priority high
 
 # Filter by label
-ag issues list --label bug
+ag issue list --label bug
 
 # Sort by creation date (newest first)
-ag issues list --sort created
+ag issue list --sort created
 
 # Show detailed information
-ag issues list --detailed
+ag issue list --detailed
 ```
 
 ### Viewing an Issue
@@ -89,7 +89,7 @@ ag issues list --detailed
 To view the details of a specific issue:
 
 ```bash
-ag issues show <issue-id>
+ag issue show <issue-id>
 ```
 
 ### Adding a Comment
@@ -97,7 +97,7 @@ ag issues show <issue-id>
 To add a comment to an issue:
 
 ```bash
-ag issues comment <issue-id> --content "Your comment here"
+ag issue comment <issue-id> --content "Your comment here"
 ```
 
 This functionality is fully implemented and allows you to add comments to issues with author information and timestamps. Comments are displayed when viewing the issue details.
@@ -108,16 +108,16 @@ To update an issue:
 
 ```bash
 # Update status
-ag issues update <issue-id> --status in_progress
+ag issue update <issue-id> --status in_progress
 
 # Update priority
-ag issues update <issue-id> --priority critical
+ag issue update <issue-id> --priority critical
 
 # Assign to a user
-ag issues update <issue-id> --assignee username
+ag issue update <issue-id> --assignee username
 
 # Add a label
-ag issues update <issue-id> --add-label documentation
+ag issue update <issue-id> --add-label documentation
 ```
 
 ## Recent Improvements
@@ -125,8 +125,8 @@ ag issues update <issue-id> --add-label documentation
 ### Comment Functionality
 
 The comment functionality has been fully implemented, allowing users to:
-- Add comments to issues with the `ag issues comment` command
-- View comments when displaying issue details with `ag issues show`
+- Add comments to issues with the `ag issue comment` command
+- View comments when displaying issue details with `ag issue show`
 - Each comment includes author information and timestamps
 
 ### Future Improvements
